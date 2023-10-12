@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://wedding:agsuH1psqKQDL8O1@cluster0.oqe3l5v.mongodb.net/?retryWrites=true&w=majority";
@@ -20,6 +21,7 @@ mongoose.connect('mongodb+srv://wedding:agsuH1psqKQDL8O1@cluster0.oqe3l5v.mongod
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -58,6 +60,10 @@ app.post('/expression', async function(req, res) {
     res.status(400).json({ error: err.message });
   }
 });
+
+app.get('/', function(req,res) {
+  res.send('endpoint untuk pernikahan');
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
