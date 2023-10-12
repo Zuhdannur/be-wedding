@@ -33,10 +33,19 @@ const Expression = mongoose.model('Expression', {
 });
 
 app.get('/expression', async function(req, res) {
-  const messages = await Expression.find();
+
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 20;
+
+  console.log(limit);
+
+  const messages = await Expression.find().skip((page - 1) * limit)
+  .limit(limit);
+  const total = await Expression.count();
   res.json({
     message : 'succes',
-    data : messages
+    data : messages,
+    total
   });
 });
 
