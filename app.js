@@ -41,7 +41,7 @@ app.get('/expression', async function(req, res) {
 
   console.log(limit);
 
-  const messages = await Expression.find().skip((page - 1) * limit)
+  const messages = await Expression.find().sort({ _id: -1 }).skip((page - 1) * limit)
   .limit(limit);
   const total = await Expression.count();
   res.json({
